@@ -1,12 +1,11 @@
 #importa bibliotecas
-import sqlite3
-from flask import Flask, request, redirect, session
+from flask import Flask, request, redirect, session, jsonify
 from flask_cors import CORS
-import bcrypt
+import bcrypt, json, sqlite3, os
 
 #iniciando o flask
 app = Flask(__name__)
-app.secret_key = "123"
+app.secret_key = os.urandom(24)
 CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5500"])
 
 #iniciando banco de dados
@@ -108,6 +107,9 @@ def cadastrar():
 def envio_de_dados():
     usuario_id = session.get('user_id')
 
+    if not usuario_id:
+        return jsonify({"erro": "não autorizado"}), 401
+
     materia = request.form.get('materia')
     dia = request.form.get('dia')
     tempo = request.form.get('tempo')
@@ -126,6 +128,36 @@ def envio_de_dados():
 
     return redirect('http://127.0.0.1:5500/graficos.html')
 
+#mostra dados para gráfico
+@app.route('/mostra-dados')
+def mostra_dados():
+    usuario_id = session.get('user_id', -1)
+    if not usuario_id:
+        return jsonify({"erro": "não autorizado"}), 401
+    
+    conn = sqlite3.connect('pystudy.db')
+    cur = conn.cursor()
+
+    cur.execute('SELECT materia, dia, tempo, acert, feitas FROM dados WHERE usuario_id = ?', (usuario_id,))
+
+    dados = cur.fetchall()
+    conn.close()
+
+    dados_t = {}
+    for x in dados:
+        materia = x[0]
+
+        if materia not in dados_t:
+            dados_t[materia] = []
+
+        dados_t[materia].append({
+            "dia": x[1],
+            "tempo": x[2],
+            "acertos": x[3],
+            "feitas": x[4]
+        })
+
+    return jsonify(dados_t)
 
 #roda o flask
 app.run(debug=True)
