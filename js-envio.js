@@ -26,3 +26,7 @@ form.addEventListener("submit", (e) => {
         alert("Acertos não podem ser maiores que feitas!")
     }
 })
+
+const inputData = document.querySelector('input[name="dia"]')
+const hoje = new Date().toISOString().split("T")[0]
+inputData.max = hoje
