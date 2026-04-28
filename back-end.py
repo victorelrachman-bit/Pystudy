@@ -2,6 +2,7 @@
 from flask import Flask, request, redirect, session, jsonify
 from flask_cors import CORS
 import bcrypt, json, sqlite3, os
+from datetime import datetime, timedelta
 
 #iniciando o flask
 app = Flask(__name__)
@@ -138,10 +139,13 @@ def mostra_dados():
     conn = sqlite3.connect('pystudy.db')
     cur = conn.cursor()
 
-    cur.execute('SELECT materia, dia, tempo, acert, feitas FROM dados WHERE usuario_id = ?', (usuario_id,))
+    cur.execute('SELECT materia, dia, tempo, acert, feitas FROM dados WHERE usuario_id = ? AND dia >= date(\'now\', \'-7 days\') ORDER BY dia ASC', (usuario_id,))
 
     dados = cur.fetchall()
     conn.close()
+
+    hoje = datetime.now()
+    dias = [(hoje - timedelta(days=i)).strftime("%Y-%m-%d") for i in range(6, -1, -1)]
 
     dados_t = {}
     for x in dados:
@@ -156,6 +160,19 @@ def mostra_dados():
             "acertos": x[3],
             "feitas": x[4]
         })
+
+    for materia in dados_t:
+        dias_db = [d["dia"] for d in dados_t[materia]]
+        for dia in dias:
+            if dia not in dias_db:
+                dados_t[materia].append({
+                "dia": dia,
+                "tempo": 0,
+                "acertos": 0,
+                "feitas": 0
+            })
+        
+        dados_t[materia].sort(key=lambda x: x["dia"])
 
     return jsonify(dados_t)
 
