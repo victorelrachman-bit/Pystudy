@@ -10,15 +10,15 @@ async function verificar() {
     }
 }
 
-function criarGraf(dias, tempo) {
-    const ctx = document.getElementById('grap').getContext('2d')
+function criarGraf(dias, tempo, car) {
+    const ctx = document.getElementById('grap-'+car[0]).getContext('2d')
 
     new Chart(ctx, {
         type: 'bar',
         data: {
             labels: dias,
             datasets: [{
-                label: "Tempo de estudo Matemática",
+                label: "Tempo de estudo " + car,
                 data: tempo,
                 borderWidth: 1
             }]
@@ -43,23 +43,34 @@ async function tratarDados() {
     const res = await fetch("http://127.0.0.1:5000/mostra-dados", {
         credentials: "include"
     });
-
     const dados = await res.json()
 
-    console.log(dados)
-
+    //mat
     const mat = dados.mat || []
     const dias_m = mat.map(item => {
         const d = new Date(item.dia)
         return d.toLocaleDateString('pt-br')
     })
     const tempo_m = mat.map(item => item.tempo)
+    criarGraf(dias_m, tempo_m, 'matemática')
 
-    console.log(dias_m, tempo_m)
+    //ing
+    const ing = dados.ing || []
+    const dias_i = ing.map(item => {
+        const d = new Date(item.dia)
+        return d.toLocaleDateString('pt-br')
+    })
+    const tempo_i = ing.map(item => item.tempo)
+    criarGraf(dias_i, tempo_i, 'inglês')
 
-    criarGraf(dias_m, tempo_m)
-
-    document.getElementById('gra').innerText = JSON.stringify(dados)
+    //prog
+    const prog = dados.prog || []
+    const dias_p = prog.map(item => {
+        const d = new Date(item.dia)
+        return d.toLocaleDateString('pt-br')
+    })
+    const tempo_p = prog.map(item => item.tempo)
+    criarGraf(dias_p, tempo_p, 'programação')
 }
 
 async function iniciar() {

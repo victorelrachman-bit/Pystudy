@@ -11,3 +11,14 @@ h2{
     text-align: center;
     color: grey;
 }
+
+#graps{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+#graps canvas{
+    width: 100%;
+    height: auto;
+}
