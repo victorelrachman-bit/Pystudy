@@ -60,4 +60,19 @@ class Database:
         conn.close()
         return dados
     
+class AuthService:
+    def __init__(self, db):
+        self.__db = db
 
+    def register(self, nome, senha):
+        user = self.__db.fetchone("SELECT * FROM usuarios WHERE nome=?", (nome,))
+
+        if user:
+            return False
+        
+        senha_bytes = senha.encode('utf-8')
+        hash_senha = bcrypt.hashpw(senha_bytes, bcrypt.gensalt()).decode('utf-8')
+        self.__db.execute("INSERT INTO usuarios (nome, senha) VALUES (?, ?)", (nome, hash_senha))
+
+    def login(self, nome, senha):
+        user = self.__db.fetchone("SELECT * FROM usuarios WHERE nome=?", (nome,))
