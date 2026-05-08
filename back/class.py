@@ -86,4 +86,19 @@ class AuthService:
             
         return None
     
-    
+class StudyService:
+    def __init__(self, db):
+        self.__db = db
+
+    def add_data(self, user_id, materia, dia, tempo, acertos, feitas):
+        self.__db.execute("""
+            INSERT INTO dados (usuario_id, materia, dia, tempo, acert, feitas)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (user_id, materia, dia, tempo, acertos, feitas))
+
+    def get_last_week(self, user_id):
+        return self.__db.fetchall("""
+            SELECT materia, dia, tempo, acert, feitas, FROM dados
+            WHERE usuario_id = ?
+            AND dia >= date('now', '-7 days')
+        """, (user_id))
