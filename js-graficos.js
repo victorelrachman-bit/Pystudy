@@ -24,7 +24,7 @@ function criarGraf(dias, tempo, car) {
             }]
         },
         options: {
-            responsive: false,  
+            responsive: true,  
             maintainAspectRatio: false,
             scales: {
                 y:{
@@ -60,7 +60,7 @@ function criarGraf2C(dias, feitas, acertos, car) {
             ]
         },
         options: {
-            responsive: false,
+            responsive: true,
             maintainAspectRatio: false,
             scales: {
                 y: {

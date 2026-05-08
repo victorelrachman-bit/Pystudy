@@ -16,13 +16,20 @@ h2{
 #graps{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
+    gap: 15px;
+    padding: 10px;
 }
 
-#graps canvas{
-    width: 100%;
-    height: auto;
+.grafico{
+    height: 200px;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.grafico canvas{
+    width: 100% !important;
+    height: 100% !important;
 }
 
 #container{
