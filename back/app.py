@@ -26,8 +26,6 @@ def cadastro():
     if user == None:
         return redirect('http://127.0.0.1:5500/cadastro.html?erro=usuario_existe')
 
-    user = auth.login(nome, senha)
-
     if user:
         session['logado'] = True
         session['user_id'] = user[0]
