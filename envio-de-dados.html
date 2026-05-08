@@ -11,34 +11,26 @@
     <h1>PYSTUDY - Plataforma de gestão de estudos</h1>
     <h2>Estude com mais foco, estude com pystudy</h2>
 
+    <div id="container">
+    <h3>Estudo do dia</h3>
     <form action="http://127.0.0.1:5000/envio-de-dados" method="POST">
-        <fieldset>
-            <legend>Estudo do dia</legend>
-            <label for="materia">Matéria: </label>
-            <select name="materia" required>
-                <option value="mat">Matemática</option>
-                <option value="ing">Inglês</option>
-                <option value="prog">Progamação</option>
-            </select>
-            <br>
-            <label for="dia">Dia: </label>
-            <input type="date" min="2010-01-01" name="dia" required>
-            <br>
-            <label for="tempo">Tempo estudado (min): </label>
-            <input type="number" name="tempo" min="0" max="180" value="0" required>
-            <br>
-        </fieldset>
-        <fieldset>
-            <legend>Questões</legend>
-            <label for="acert">Questões acertadas: </label>
-            <input type="number" name="acert" min="0" max="350" value="0">
-            <br>
-            <label for="feitas">Questões Feitas: </label>
-            <input type="number" min="0" name="feitas" max="350" value="0">
-        </fieldset>
+        <label for="materia">Matéria: </label>
+        <select name="materia" required>
+            <option value="mat">Matemática</option>
+            <option value="ing">Inglês</option>
+            <option value="prog">Progamação</option>
+        </select>
+        <label for="dia">Dia: </label>
+        <input type="date" min="2010-01-01" name="dia" required>
+        <label for="tempo">Tempo estudado (min): </label>
+        <input type="number" name="tempo" min="0" max="180" value="0" required>
+        <label for="acert">Questões acertadas: </label>
+        <input type="number" name="acert" min="0" max="350" value="0">
+        <label for="feitas">Questões Feitas: </label>
+        <input type="number" min="0" name="feitas" max="350" value="0">
         <input type="submit" value="Enviar">
     </form>
-    
+    </div>
     <script src="js-envio.js"></script>
 </body>
 </html>

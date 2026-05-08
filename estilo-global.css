@@ -1,6 +1,7 @@
-html{
+body{
     margin: 0;
     font-size: 16px;
+    background-color: #FFF4E8;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -23,3 +24,62 @@ h2{
     width: 100%;
     height: auto;
 }
+
+#container{
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #FF8C42;
+    width: 30%;
+    height: auto;
+    padding: 3%;
+    border-radius: 16px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 3px;
+    margin: 3px;
+}
+
+form > input[type="number"], form > input[type="submit"], form > input[type="text"], form > input[type="password"]  {
+    margin: 1%;
+    font-size: 16px;
+    padding: 2.5px;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+form > input[type="date"]{
+    font-size: 13px;
+    margin: 1%;
+    padding: 2.5px;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+form > input[type="submit"]
+{
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #ffe138;
+    color: black;
+    margin-bottom: 5%;
+}
+
+select{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+
