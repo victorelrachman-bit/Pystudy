@@ -76,3 +76,14 @@ class AuthService:
 
     def login(self, nome, senha):
         user = self.__db.fetchone("SELECT * FROM usuarios WHERE nome=?", (nome,))
+
+        if user:
+            hash_salvo = user[2]
+            hash_salvo = hash_salvo.encode('utf-8')
+
+            if bcrypt.checkpw(senha.encode('utf-8'), hash_salvo):
+                return user
+            
+        return None
+    
+    
